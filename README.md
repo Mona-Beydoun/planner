@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Yehia's Career Path
 
-## Getting Started
+**Author:** Mona Beydoun
 
-First, run the development server:
+A small Next.js 16 website that helps Yehia, a Computer Science graduate,
+organize his job search. It has a home page, a three-step plan, a list of
+opportunities with a details page for each, and a dashboard with his
+applications.
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Questions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**1. Why did you use `await` when reading `params`?**
+In Next.js 16, `params` is a Promise, not a plain object. I use `await` so the
+page waits for the route information and then I can read the `id` from it.
 
-## Learn More
+**2. Why is the route ID a string?**
+URL segments are text. `/opportunities/1` gives the value `"1"`, so I kept the
+IDs in my data as strings to make the `===` comparison match.
 
-To learn more about Next.js, take a look at the following resources:
+**3. What belongs in the dashboard layout, and what belongs in each dashboard page?**
+The layout holds what is shared by all dashboard pages: the Overview and
+Applications navigation, with `children` showing the current page. Each page
+holds its own content: the overview shows the summary count, and the
+applications page shows the list.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Note on client components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+All pages and layouts are Server Components. Only `NavLinks` and
+`DashboardNav` use `"use client"`, because they need `usePathname` to
+highlight the current page in the menu.
